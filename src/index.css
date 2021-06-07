@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: whitesmoke;
+}
+.MuiList-root a.active {
+  background-color: #3f51b5 !important;
+  color: white !important;
+}
+.MuiList-root a.active .MuiListItemIcon-root svg {
+  color: white !important;
+}
+.MuiDrawer-root > div {
+  background-color: white;
+}
