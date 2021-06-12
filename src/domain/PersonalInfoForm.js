@@ -1,6 +1,7 @@
-import React from "react"
-import { Form, Button, Col, Row } from "react-bootstrap"
-import styled from "styled-components"
+import React, { useState } from "react";
+import { Form, Button, Col, Row } from "react-bootstrap";
+import styled from "styled-components";
+import firebase from "firebase/app";
 
 const FormContainer = styled.form`
   width: 500px;
@@ -9,7 +10,7 @@ const FormContainer = styled.form`
   margin-top: 25px;
   box-shadow: 0 0 20px silver;
   border-radius: 10px;
-`
+`;
 
 const week = [
   "Sunday",
@@ -19,7 +20,7 @@ const week = [
   "Thursday",
   "Friday",
   "Saturday",
-]
+];
 
 function PersonalInfoForm({ form, setForm, navigation }) {
   const {
@@ -30,7 +31,28 @@ function PersonalInfoForm({ form, setForm, navigation }) {
     operatingHoursTo,
     weeklyOff,
     agreement,
-  } = form
+  } = form;
+
+  const onRegister = (mobileNo) => {
+    let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
+    let number = "+91" + mobileNo;
+    firebase
+      .auth()
+      .signInWithPhoneNumber(number, reCaptcha)
+      .then((res) => {
+        let code = prompt("enter the otp", "");
+        if (code == null) return;
+        res
+          .confirm(code)
+          .then((result) => {
+            console.log(result.user, "user");
+            alert("number verified " + number);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+  };
 
   return (
     <FormContainer className="mx-auto">
@@ -105,6 +127,7 @@ function PersonalInfoForm({ form, setForm, navigation }) {
           label="I agree to comply with terms and conditions of ShopiAds business solution aggreement"
         />
       </Form.Group>
+      <div id="recaptcha"></div>
       <div className="w-100 d-flex justify-content-around">
         <Button
           className="mt-3 w-50 mr-1"
@@ -112,10 +135,12 @@ function PersonalInfoForm({ form, setForm, navigation }) {
         >
           Back
         </Button>
-        <Button className="mt-3 w-50 ml-1">Submit</Button>
+        <Button onClick={() => onRegister()} className="mt-3 w-50 ml-1">
+          Submit
+        </Button>
       </div>
     </FormContainer>
-  )
+  );
 }
 
-export default PersonalInfoForm
+export default PersonalInfoForm;
