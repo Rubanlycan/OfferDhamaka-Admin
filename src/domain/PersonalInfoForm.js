@@ -23,6 +23,9 @@ const week = [
 ];
 
 function PersonalInfoForm({ form, setForm, navigation }) {
+  const [otp, setotp] = React.useState();
+  const [otpResult, setOtpResult] = React.useState(null);
+  const [isOtpClicked, setOtpClicked] = React.useState(false);
   const {
     ownerName,
     email,
@@ -33,24 +36,31 @@ function PersonalInfoForm({ form, setForm, navigation }) {
     agreement,
   } = form;
 
-  const onRegister = (mobileNo) => {
+  const onRegister = () => {
+    if (otp) {
+      otpResult
+        .confirm(otp)
+        .then((result) => {
+          console.log(result.user, "user");
+          alert("number verified Successfully");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(error);
+        });
+    } else {
+      alert("Please enter Otp");
+    }
+  };
+  const onGetOtp = (mobileNo) => {
+    setOtpClicked(true);
     let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
     let number = "+91" + mobileNo;
     firebase
       .auth()
       .signInWithPhoneNumber(number, reCaptcha)
       .then((res) => {
-        let code = prompt("enter the otp", "");
-        if (code == null) return;
-        res
-          .confirm(code)
-          .then((result) => {
-            console.log(result.user, "user");
-            alert("number verified " + number);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        setOtpResult(res);
       });
   };
 
@@ -84,6 +94,17 @@ function PersonalInfoForm({ form, setForm, navigation }) {
           onChange={setForm}
         />
       </Form.Group>
+      {isOtpClicked ? (
+        <Form.Group>
+          <Form.Label>Please enter your OTP</Form.Label>
+          <Form.Control
+            name="otp"
+            maxLength={6}
+            type="text"
+            onChange={(e) => setotp(e.target.value)}
+          />
+        </Form.Group>
+      ) : null}
 
       <Form.Label>Store operating hours</Form.Label>
       <Form.Row>
@@ -135,8 +156,13 @@ function PersonalInfoForm({ form, setForm, navigation }) {
         >
           Back
         </Button>
-        <Button onClick={() => onRegister()} className="mt-3 w-50 ml-1">
-          Submit
+        <Button
+          onClick={() => {
+            otpResult ? onRegister() : onGetOtp("9892735034");
+          }}
+          className="mt-3 w-50 ml-1"
+        >
+          {isOtpClicked ? "Submit" : " Get OTP"}
         </Button>
       </div>
     </FormContainer>
