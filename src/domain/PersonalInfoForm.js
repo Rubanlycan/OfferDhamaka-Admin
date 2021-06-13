@@ -25,6 +25,7 @@ const week = [
 function PersonalInfoForm({ form, setForm, navigation }) {
   const [otp, setotp] = React.useState();
   const [otpResult, setOtpResult] = React.useState(null);
+  const [mobileNum, setMobileNum] = React.useState("");
   const [isOtpClicked, setOtpClicked] = React.useState(false);
   const {
     ownerName,
@@ -53,15 +54,19 @@ function PersonalInfoForm({ form, setForm, navigation }) {
     }
   };
   const onGetOtp = (mobileNo) => {
-    setOtpClicked(true);
-    let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
-    let number = "+91" + mobileNo;
-    firebase
-      .auth()
-      .signInWithPhoneNumber(number, reCaptcha)
-      .then((res) => {
-        setOtpResult(res);
-      });
+    if (mobileNo) {
+      setOtpClicked(true);
+      let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
+      let number = "+1" + mobileNo;
+      firebase
+        .auth()
+        .signInWithPhoneNumber(number, reCaptcha)
+        .then((res) => {
+          setOtpResult(res);
+        });
+    } else {
+      alert("Mobile number is mandatory");
+    }
   };
 
   return (
@@ -90,8 +95,7 @@ function PersonalInfoForm({ form, setForm, navigation }) {
         <Form.Control
           name="contactNumber"
           type="text"
-          value={contactNumber}
-          onChange={setForm}
+          onChange={(e) => setMobileNum(e.target.value)}
         />
       </Form.Group>
       {isOtpClicked ? (
@@ -158,7 +162,7 @@ function PersonalInfoForm({ form, setForm, navigation }) {
         </Button>
         <Button
           onClick={() => {
-            otpResult ? onRegister() : onGetOtp("9892735034");
+            otpResult ? onRegister() : onGetOtp(mobileNum);
           }}
           className="mt-3 w-50 ml-1"
         >
