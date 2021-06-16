@@ -56,11 +56,11 @@ function Stores() {
 
   return (
     <>
-      <BranchModal
+      {/* <BranchModal
         open={open}
         handleClose={handleClose}
         BranchData={(val) => getBranchData(val)}
-      />
+      /> */}
       <Form style={style.form}>
         <center className="mb-5">
           <Form.Label as="legend">
@@ -136,7 +136,7 @@ function Stores() {
           </Form.Group>
         </InputGroup>
 
-        <Form.Group className="col-2 mt-4 mb-4">
+        {/* <Form.Group className="col-2 mt-4 mb-4">
           <Button
             variant="contained"
             color="secondary"
@@ -144,7 +144,7 @@ function Stores() {
           >
             Add Branch
           </Button>
-        </Form.Group>
+        </Form.Group> */}
 
         {branchData && branchData.length > 0 ? (
           <Table columns={columns} data={branchData} propertyAsKey="name" />

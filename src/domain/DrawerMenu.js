@@ -11,6 +11,7 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import StoreIcon from "@material-ui/icons/Store"
+import AccountTreeIcon from "@material-ui/icons/AccountTree"
 import LocalOfferRoundedIcon from "@material-ui/icons/LocalOfferRounded"
 import ExtensionRoundedIcon from "@material-ui/icons/ExtensionRounded"
 import CategoryRoundedIcon from "@material-ui/icons/CategoryRounded"
@@ -64,6 +65,12 @@ const menuList = [
     tooltip: "Manage Stores",
     icon: StoreIcon,
     url: "/home/stores",
+  },
+  {
+    title: "Branches",
+    tooltip: "Manage Branches",
+    icon: AccountTreeIcon,
+    url: "/home/branches",
   },
   {
     title: "Offers",

@@ -1,9 +1,26 @@
 import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
 import MUIDataTable from "mui-datatables"
-import Typography from "@material-ui/core/Typography"
-import AddCircleIcon from "@material-ui/icons/AddCircle"
-import IconButton from "@material-ui/core/IconButton"
+import Button from "@material-ui/core/Button"
+import AddRoundedIcon from "@material-ui/icons/AddRounded"
 import { NavLink } from "react-router-dom"
+
+const useStyles = makeStyles(() => ({
+  tab: {
+    display: "flex",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    padding: "0 20px",
+    boxShadow:
+      "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
+  },
+  button: {
+    height: "fit-content",
+    "&:hover": {
+      color: "#fff",
+    },
+  },
+}))
 
 const columns = [
   {
@@ -52,16 +69,16 @@ const options = {
   rowsPerPage: 10,
   print: false,
   customToolbar: () => (
-    <IconButton
-      aria-label="account of current user"
-      aria-haspopup="true"
+    <Button
+      variant="outlined"
+      color="primary"
+      startIcon={<AddRoundedIcon />}
+      size="small"
       component={NavLink}
       to={"/home/users/add"}
-      style={{ textDecoration: "none" }}
     >
-      <AddCircleIcon />
-      <Typography style={{ marginLeft: "5px" }}>Add User</Typography>
-    </IconButton>
+      Add User
+    </Button>
   ),
 }
 
