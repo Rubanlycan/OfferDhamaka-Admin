@@ -4,6 +4,7 @@ import Dialog from "@material-ui/core/Dialog"
 import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogTitle from "@material-ui/core/DialogTitle"
+import Backdrop from "@material-ui/core/Backdrop"
 import { Form, InputGroup } from "react-bootstrap"
 
 export default function BranchModal({ BranchData, open, handleClose }) {
@@ -28,6 +29,11 @@ export default function BranchModal({ BranchData, open, handleClose }) {
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       style={{ width: "100%" }}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
     >
       <DialogTitle id="form-dialog-title">
         Please enter your branch information

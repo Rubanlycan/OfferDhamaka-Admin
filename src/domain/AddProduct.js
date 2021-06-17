@@ -37,7 +37,7 @@ function AddProducts() {
           </Form.Control>
         </Form.Group>
         <Form.Label>OR</Form.Label>
-        <Form.Group className="col-2 mt-4">
+        <Form.Group className="col mt-4">
           <Button
             variant="contained"
             color="default"
@@ -183,7 +183,6 @@ const style = {
   form: {
     backgroundColor: "white",
     padding: "25px",
-    boxShadow:
-      "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
+    boxShadow: "0 0 15px silver",
   },
 }
