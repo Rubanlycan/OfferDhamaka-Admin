@@ -1,10 +1,10 @@
-import React, { useState } from "react"
-import { Form, Button, InputGroup, Alert } from "react-bootstrap"
-import { motion } from "framer-motion"
-import { useHistory } from "react-router-dom"
-import { useAuth } from "../utils/AuthContext"
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import React, { useState } from "react";
+import { Form, Button, InputGroup, Alert } from "react-bootstrap";
+import { motion } from "framer-motion";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../utils/AuthContext";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const FormContainer = styled.form`
   width: 400px;
@@ -13,7 +13,7 @@ const FormContainer = styled.form`
   margin-top: 150px;
   box-shadow: 0 0 20px silver;
   border-radius: 10px;
-`
+`;
 const RegisterLink = styled(Link)`
   position: absolute;
   top: 0;
@@ -26,32 +26,32 @@ const RegisterLink = styled(Link)`
   :hover {
     text-decoration: none;
   }
-`
+`;
 
 function ForgotPassword() {
-  const [email, setEmail] = useState("")
-  const [errMsg, setErrMsg] = useState("")
-  const [successMsg, setSuccessMsg] = useState("")
-  const [btnDisable, setBtnDisable] = useState("")
+  const [email, setEmail] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [btnDisable, setBtnDisable] = useState("");
   const handleChange = (e) => {
-    setErrMsg("")
-    setSuccessMsg("")
-    setEmail(e.target.value)
-  }
-  const { resetPassword } = useAuth()
+    setErrMsg("");
+    setSuccessMsg("");
+    setEmail(e.target.value);
+  };
+  const { resetPassword } = useAuth();
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      setBtnDisable(true)
-      await resetPassword(email)
-      setSuccessMsg("Check your inbox for further instruction")
-      setEmail("")
+      setBtnDisable(true);
+      await resetPassword(email);
+      setSuccessMsg("Check your inbox for further instruction");
+      setEmail("");
     } catch (err) {
-      setErrMsg(err.code.split("/")[1])
+      setErrMsg(err.code.split("/")[1]);
     }
-    setBtnDisable(false)
-  }
-  const history = useHistory()
+    setBtnDisable(false);
+  };
+  const history = useHistory();
   return (
     <>
       <RegisterLink to="register">New User ? Register here .</RegisterLink>
@@ -59,7 +59,7 @@ function ForgotPassword() {
         <FormContainer className="mx-auto" onSubmit={handleSubmit}>
           <i
             style={style.backButton}
-            class="fa fa-arrow-circle-left"
+            className="fa fa-arrow-circle-left"
             aria-hidden="true"
             title="Back to Login"
             onClick={() => history.push(`/Login`)}
@@ -92,10 +92,10 @@ function ForgotPassword() {
         </FormContainer>
       </motion.div>
     </>
-  )
+  );
 }
 
-export default ForgotPassword
+export default ForgotPassword;
 
 const style = {
   backButton: {
@@ -104,4 +104,4 @@ const style = {
     color: "blue",
     cursor: "pointer",
   },
-}
+};
