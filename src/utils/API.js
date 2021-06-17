@@ -40,10 +40,12 @@ const API = {
     return encodedData
   },
 
+  //   To add new store
   createStore({ id, body }) {
     return Auth_api.post(`/stores/addStore/${id}`, body)
   },
 
+  // To get store details
   getStore(id) {
     return Auth_api.get(`/stores/getStore/${id}`)
   },

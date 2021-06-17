@@ -31,7 +31,6 @@ export const StoreDataProvider = ({ children }) => {
     try {
       dispatch({ type: storeActions.MAKE_REQUEST })
       const response = await API.createStore({ id, body })
-      console.log(response)
     } catch (error) {
       dispatch({
         type: storeActions.ERROR,
