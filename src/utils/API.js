@@ -34,20 +34,30 @@ Auth_api.interceptors.response.use(
   }
 )
 
-const API = {
-  encodedUserId(userId) {
-    var encodedData = btoa(userId)
-    return encodedData
-  },
+const encodedUserId = (userId) => {
+  var encodedData = btoa(userId)
+  return encodedData
+}
 
-  //   To add new store
+const API = {
+  // To add new store
   createStore({ id, body }) {
     return Auth_api.post(`/stores/addStore/${id}`, body)
   },
 
-  // To get store details
-  getStore(id) {
-    return Auth_api.get(`/stores/getStore/${id}`)
+  // Get company by user
+  getCompanyByUser(user_id) {
+    return Auth_api.get(`/companies/getCompany/${user_id}`)
+  },
+
+  // Get store by company
+  getStoreByCompany(company_id) {
+    return Auth_api.get(`/stores/getStoreByCompany/${company_id}`)
+  },
+
+  // Get store by user
+  getStoreByUser(user_id) {
+    return Auth_api.get(`/stores/getStore/${user_id}`)
   },
 }
 

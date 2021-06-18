@@ -4,7 +4,7 @@ import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom"
 import { Header, DrawerMenu } from "../domain"
 import Offers from "./Offers"
 import Products from "./Products"
-import Stores from "./Stores"
+import Company from "./Company"
 import Branches from "./Branches"
 import Users from "./Users"
 import Categories from "./Categories"
@@ -43,13 +43,13 @@ export default function HomePage() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route path={`${path}/stores`} component={Stores} />
+          <Route path={`${path}/company`} component={Company} />
           <Route path={`${path}/branches`} component={Branches} />
           <Route path={`${path}/offers`} component={Offers} />
           <Route path={`${path}/products`} component={Products} />
           <Route path={`${path}/categories`} component={Categories} />
           <Route path={`${path}/users`} component={Users} />
-          <Redirect to={`${path}/stores`} />
+          <Redirect to={`${path}/company`} />
         </Switch>
       </main>
     </div>
