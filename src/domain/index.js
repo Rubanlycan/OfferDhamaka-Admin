@@ -13,3 +13,4 @@ export { default as AddressForm } from "./AddressForm";
 export { default as ChooseCategoryForm } from "./ChooseCategoryForm";
 export { default as MobileNo } from "./MobileNo";
 export { default as SignUp } from "./SignUp";
+export { default as ManageBranches } from "./ManageBranches";

@@ -102,7 +102,9 @@ const RegisterForms = ({ id, data }) => {
   const [otpResult, setOtpResult] = React.useState({});
   switch (id) {
     // case "mobileNo":
-    //   return <MobileNo {...data} setOtpResult={setOtpResult} />;
+    //   return (
+    //     <MobileNo {...data} setOtpResult={setOtpResult} otpResult={otpResult} />
+    //   );
     // case "signUp":
     //   return <SignUp {...data} otpResult={otpResult} />;
     case "storeInfo":

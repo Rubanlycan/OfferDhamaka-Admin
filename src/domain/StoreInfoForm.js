@@ -78,7 +78,7 @@ function StoreInfoForm({ form, setForm, navigation }) {
       </Form.Group>
 
       <Form.Label>Company Logo</Form.Label>
-      <Form.Row className="m-0">
+      {/* <Form.Row className="m-0">
         <Row>
           <Col sm={10}>
             <Form.Group>
@@ -96,7 +96,16 @@ function StoreInfoForm({ form, setForm, navigation }) {
             </Form.Group>
           </Col>
         </Row>
-      </Form.Row>
+      </Form.Row> */}
+
+      <Form.File
+        id="custom-file"
+        label={logo}
+        custom
+        name="logo"
+        value={logo}
+        onChange={setForm}
+      />
       <div className="w-100 d-flex justify-content-around">
         <Button
           className="mt-3 w-50 mr-1"

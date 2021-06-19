@@ -34,26 +34,27 @@ const SignUp = ({ navigation, form, setForm, otpResult }) => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [btnDisable, setBtnDisable] = useState("");
-  const handleChange = (e) => {
-    setErrMsg("");
-    setSuccessMsg("");
-  };
+
   const { resetPassword } = useAuth();
 
   const handleSubmit = async (e) => {
-    if (form.otp) {
-      otpResult
-        .confirm(form.otp)
-        .then((result) => {
-          console.log(result.user, "user");
-          alert("number verified Successfully");
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error);
-        });
-    } else {
-      alert("Please enter Otp");
+    try {
+      if (form.otp) {
+        otpResult
+          .confirm(form.otp)
+          .then((result) => {
+            console.log(result.user, "user");
+            alert("number verified Successfully");
+          })
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+      } else {
+        alert("Please enter Otp");
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -63,7 +64,7 @@ const SignUp = ({ navigation, form, setForm, otpResult }) => {
     <>
       <RegisterLink to="register">New User ? Register here .</RegisterLink>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <FormContainer className="mx-auto" onSubmit={handleSubmit}>
+        <FormContainer className="mx-auto">
           <i
             style={style.backButton}
             className="fa fa-arrow-circle-left"
@@ -104,10 +105,10 @@ const SignUp = ({ navigation, form, setForm, otpResult }) => {
           </Form.Group>
 
           <Button
+            onClick={handleSubmit}
             variant="primary"
             type="submit"
             className="w-100"
-            disabled={btnDisable}
           >
             Submit
           </Button>

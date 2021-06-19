@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 import firebase from "firebase/app";
+import { useStore } from "../context";
 
 const FormContainer = styled.form`
   width: 500px;
@@ -27,6 +28,8 @@ function PersonalInfoForm({ form, setForm, navigation }) {
   const [otpResult, setOtpResult] = React.useState(null);
   const [mobileNum, setMobileNum] = React.useState("");
   const [isOtpClicked, setOtpClicked] = React.useState(false);
+  const { createStore } = useStore();
+
   const {
     ownerName,
     email,
@@ -37,37 +40,88 @@ function PersonalInfoForm({ form, setForm, navigation }) {
     agreement,
   } = form;
 
-  const onRegister = () => {
-    if (otp) {
-      otpResult
-        .confirm(otp)
-        .then((result) => {
-          console.log(result.user, "user");
-          alert("number verified Successfully");
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error);
-        });
-    } else {
-      alert("Please enter Otp");
-    }
+  const Register = () => {
+    let data = {
+      id: "Z3Vlc3Q=",
+      code: "Primary",
+      gstin: "string",
+      storeName: "testDV121",
+      companyBusinessName: "testCompany",
+      websiteUrl: "test.com",
+      companyLogo: "test",
+      categories: [
+        {
+          id: "1",
+          name: "fashoin",
+        },
+      ],
+      countryId: "1",
+      address1: "test",
+      address2: "test",
+      stateId: "1",
+      cityId: "1",
+      pincode: "11021",
+      isphysical: "Y",
+      isSameAddress: "N",
+      storeCountryId: "2",
+      storeAddress1: "test2",
+      storeAddress2: "test2",
+      storeStateId: "1",
+      storeCityId: "1",
+      storePincode: "111021",
+      managerName: "test",
+      managerMobile: "13123123",
+      managerEmail: "test@test.com",
+      fromHrs: 0,
+      toHrs: 0,
+      weeklyOff: "Sunday",
+      featuredFrom: "2021-06-15T05:02:19.236Z",
+      featuredTill: "2021-06-15T05:02:19.236Z",
+      companyId: "string",
+      active: "Y",
+      isPremium: "Y",
+      areas: ["string"],
+      createdOn: "2021-06-15T05:02:19.236Z",
+      updatedOn: "2021-06-15T05:02:19.236Z",
+      createdBy: "string",
+      updatedBy: "string",
+      logo: "string",
+      area: "string",
+    };
+    createStore(data);
   };
-  const onGetOtp = (mobileNo) => {
-    if (mobileNo) {
-      setOtpClicked(true);
-      let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
-      let number = "+1" + mobileNo;
-      firebase
-        .auth()
-        .signInWithPhoneNumber(number, reCaptcha)
-        .then((res) => {
-          setOtpResult(res);
-        });
-    } else {
-      alert("Mobile number is mandatory");
-    }
-  };
+
+  // const onRegister = () => {
+  //   if (otp) {
+  //     otpResult
+  //       .confirm(otp)
+  //       .then((result) => {
+  //         console.log(result.user, "user");
+  //         alert("number verified Successfully");
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         alert(error);
+  //       });
+  //   } else {
+  //     alert("Please enter Otp");
+  //   }
+  // };
+  // const onGetOtp = (mobileNo) => {
+  //   if (mobileNo) {
+  //     setOtpClicked(true);
+  //     let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
+  //     let number = "+1" + mobileNo;
+  //     firebase
+  //       .auth()
+  //       .signInWithPhoneNumber(number, reCaptcha)
+  //       .then((res) => {
+  //         setOtpResult(res);
+  //       });
+  //   } else {
+  //     alert("Mobile number is mandatory");
+  //   }
+  // };
 
   return (
     <FormContainer className="mx-auto">
@@ -152,7 +206,7 @@ function PersonalInfoForm({ form, setForm, navigation }) {
           label="I agree to comply with terms and conditions of ShopiAds business solution aggreement"
         />
       </Form.Group>
-      <div id="recaptcha"></div>
+
       <div className="w-100 d-flex justify-content-around">
         <Button
           className="mt-3 w-50 mr-1"
@@ -160,13 +214,8 @@ function PersonalInfoForm({ form, setForm, navigation }) {
         >
           Back
         </Button>
-        <Button
-          onClick={() => {
-            otpResult ? onRegister() : onGetOtp(mobileNum);
-          }}
-          className="mt-3 w-50 ml-1"
-        >
-          {isOtpClicked ? "Submit" : " Get OTP"}
+        <Button onClick={Register} className="mt-3 w-50 ml-1">
+          {"Submit"}
         </Button>
       </div>
     </FormContainer>

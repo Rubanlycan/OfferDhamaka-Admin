@@ -32,11 +32,14 @@ const RegisterLink = styled(Link)`
 
 const MobileNo = ({ form, setForm, navigation, setOtpResult }) => {
   const [isOtpClicked, setOtpClicked] = React.useState(false);
+  const [reCaptcha, setRecaptcha] = React.useState();
+  // firebase.auth().settings.appVerificationDisabledForTesting = true;
 
   const onGetOtp = () => {
     if (form.mobileNo.length == 10) {
       setOtpClicked(true);
       let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
+
       let number = "+91" + form.mobileNo;
       firebase
         .auth()
