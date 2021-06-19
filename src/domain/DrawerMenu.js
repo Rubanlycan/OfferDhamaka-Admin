@@ -64,7 +64,7 @@ const menuList = [
     title: "Stores",
     tooltip: "Manage Stores",
     icon: StoreIcon,
-    url: "/home/stores",
+    url: "/home/company",
   },
   {
     title: "Branches",
