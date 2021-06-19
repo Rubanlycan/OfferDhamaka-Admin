@@ -1,6 +1,6 @@
-import React from "react"
-import { Form, Button, Row, Col } from "react-bootstrap"
-import styled from "styled-components"
+import React from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import styled from "styled-components";
 
 const FormContainer = styled.form`
   width: 500px;
@@ -9,9 +9,9 @@ const FormContainer = styled.form`
   margin-top: 25px;
   box-shadow: 0 0 20px silver;
   border-radius: 10px;
-`
+`;
 
-const country = ["India"]
+const country = ["Canada"];
 
 function AddressForm({ form, setForm, navigation }) {
   const {
@@ -21,13 +21,19 @@ function AddressForm({ form, setForm, navigation }) {
     provinceBA,
     postalCodeBA,
     isPhysicalStore,
+    AppartmentName,
+    secStreetBA,
+    secCityBA,
+    secProvinceBA,
+    secPostalCodeBA,
+    secAppartmentName,
     isPhysicalSameAsRegisteredAddress,
     countryPA,
     streetPA,
     cityPA,
     provincePA,
     postalCodePA,
-  } = form
+  } = form;
 
   return (
     <FormContainer className="mx-auto">
@@ -52,7 +58,15 @@ function AddressForm({ form, setForm, navigation }) {
           ))}
         </Form.Control>
       </Form.Group>
-
+      <Form.Group>
+        <Form.Label>Appartment No</Form.Label>
+        <Form.Control
+          name="AppartmentName"
+          type="text"
+          value={AppartmentName}
+          onChange={setForm}
+        />
+      </Form.Group>
       <Form.Group controlId="exampleForm.ControlTextarea1">
         <Form.Label>Street Address</Form.Label>
         <Form.Control
@@ -64,6 +78,24 @@ function AddressForm({ form, setForm, navigation }) {
         />
       </Form.Group>
 
+      {/* <Form.Group>
+        <Form.Label>City</Form.Label>
+        <Form.Control
+          name="cityBA"
+          type="text"
+          value={cityBA}
+          onChange={setForm}
+        />
+      </Form.Group> */}
+      <Form.Group>
+        <Form.Label>Province</Form.Label>
+        <Form.Control
+          name="provinceBA"
+          type="text"
+          value={provinceBA}
+          onChange={setForm}
+        />
+      </Form.Group>
       <Form.Row className="m-0">
         <Row>
           <Col>
@@ -88,25 +120,6 @@ function AddressForm({ form, setForm, navigation }) {
           </Col>
         </Row>
       </Form.Row>
-
-      {/* <Form.Group>
-        <Form.Label>City</Form.Label>
-        <Form.Control
-          name="cityBA"
-          type="text"
-          value={cityBA}
-          onChange={setForm}
-        />
-      </Form.Group> */}
-      <Form.Group>
-        <Form.Label>Province</Form.Label>
-        <Form.Control
-          name="provinceBA"
-          type="text"
-          value={provinceBA}
-          onChange={setForm}
-        />
-      </Form.Group>
       {/* <Form.Group>
         <Form.Label>Postal Code</Form.Label>
         <Form.Control
@@ -123,6 +136,8 @@ function AddressForm({ form, setForm, navigation }) {
           label="Yes"
           name="isPhysicalStore"
           type="radio"
+          value="Yes"
+          onChange={setForm}
           id="inline-radio-1"
         />
         <Form.Check
@@ -130,29 +145,106 @@ function AddressForm({ form, setForm, navigation }) {
           label="No"
           name="isPhysicalStore"
           type="radio"
+          value="No"
+          onChange={setForm}
           id="inline-radio-2"
         />
       </Form.Group>
 
-      <Form.Label>
-        Physical address same as registered business address !
-      </Form.Label>
-      <Form.Group>
-        <Form.Check
-          inline
-          label="Yes"
-          name="isPhysicalSameAsRegisteredAddress"
-          type="radio"
-          id="same-address-1"
+      {isPhysicalStore == "No" && (
+        <div>
+          <Form.Label>
+            Physical address same as registered business address !
+          </Form.Label>
+          <Form.Group>
+            <Form.Check
+              inline
+              label="Yes"
+              value="Yes"
+              name="isPhysicalSameAsRegisteredAddress"
+              type="radio"
+              onChange={setForm}
+              id="same-address-1"
+            />
+            <Form.Check
+              inline
+              label="No"
+              value="No"
+              name="isPhysicalSameAsRegisteredAddress"
+              type="radio"
+              onChange={setForm}
+              id="same-address-2"
+            />
+          </Form.Group>
+        </div>
+      )}
+
+      {isPhysicalStore === "No" && isPhysicalSameAsRegisteredAddress === "No" && (
+        <div>
+          <Form.Group>
+            <Form.Label>Appartment No</Form.Label>
+            <Form.Control
+              name="AppartmentName"
+              type="text"
+              value={AppartmentName}
+              onChange={setForm}
+            />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Street Address</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="secStreetBA"
+              value={secStreetBA}
+              onChange={setForm}
+            />
+          </Form.Group>
+
+          {/* <Form.Group>
+        <Form.Label>City</Form.Label>
+        <Form.Control
+          name="cityBA"
+          type="text"
+          value={cityBA}
+          onChange={setForm}
         />
-        <Form.Check
-          inline
-          label="No"
-          name="isPhysicalSameAsRegisteredAddress"
-          type="radio"
-          id="same-address-2"
-        />
-      </Form.Group>
+      </Form.Group> */}
+          <Form.Group>
+            <Form.Label>Province</Form.Label>
+            <Form.Control
+              name="secProvinceBA"
+              type="text"
+              value={secProvinceBA}
+              onChange={setForm}
+            />
+          </Form.Group>
+          <Form.Row className="m-0">
+            <Row>
+              <Col>
+                <Form.Group>
+                  <Form.Control
+                    name="secCityBA"
+                    placeholder="City"
+                    value={secCityBA}
+                    onChange={setForm}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group>
+                  <Form.Control
+                    name="secPostalCodeBA"
+                    placeholder="Postal Code"
+                    value={secPostalCodeBA}
+                    onChange={setForm}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form.Row>
+        </div>
+      )}
 
       <div className="w-100 d-flex justify-content-around">
         <Button
@@ -166,7 +258,7 @@ function AddressForm({ form, setForm, navigation }) {
         </Button>
       </div>
     </FormContainer>
-  )
+  );
 }
 
-export default AddressForm
+export default AddressForm;

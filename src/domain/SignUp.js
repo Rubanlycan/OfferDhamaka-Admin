@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Navigation } from "@material-ui/icons";
 
 const FormContainer = styled.form`
   width: 400px;
@@ -28,35 +29,42 @@ const RegisterLink = styled(Link)`
   }
 `;
 
-function ForgotPassword() {
-  const [email, setEmail] = useState("");
+const SignUp = ({ navigation, form, setForm, otpResult }) => {
+  const [mobile, setMobile] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [btnDisable, setBtnDisable] = useState("");
-  const handleChange = (e) => {
-    setErrMsg("");
-    setSuccessMsg("");
-    setEmail(e.target.value);
-  };
+
   const { resetPassword } = useAuth();
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
-      setBtnDisable(true);
-      await resetPassword(email);
-      setSuccessMsg("Check your inbox for further instruction");
-      setEmail("");
-    } catch (err) {
-      setErrMsg(err.code.split("/")[1]);
+      if (form.otp) {
+        otpResult
+          .confirm(form.otp)
+          .then((result) => {
+            console.log(result.user, "user");
+            alert("number verified Successfully");
+          })
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+      } else {
+        alert("Please enter Otp");
+      }
+    } catch (e) {
+      console.log(e);
     }
-    setBtnDisable(false);
   };
+
   const history = useHistory();
+
   return (
     <>
       <RegisterLink to="register">New User ? Register here .</RegisterLink>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <FormContainer className="mx-auto" onSubmit={handleSubmit}>
+        <FormContainer className="mx-auto">
           <i
             style={style.backButton}
             className="fa fa-arrow-circle-left"
@@ -65,27 +73,42 @@ function ForgotPassword() {
             onClick={() => history.push(`/Login`)}
           ></i>
           <Form.Group controlId="formBasicEmail" className="mb-4">
-            <Form.Label className="text-center">
-              Please enter your registered email address and we will help you to
-              reset your password.
-            </Form.Label>
-            {errMsg && <Alert variant="danger">{errMsg}</Alert>}
-            {successMsg && <Alert variant="success">{successMsg}</Alert>}
-            <InputGroup className="mt-3">
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                onChange={handleChange}
-                required
-              />
-            </InputGroup>
+            <Form.Label>Mobile Number</Form.Label>
+            <Form.Control
+              readOnly
+              value={form.mobileNo}
+              type="number"
+              maxLength={10}
+              max={10}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicEmail" className="mb-4">
+            <Form.Label>Enter OTP</Form.Label>
+            <Form.Control
+              type="number"
+              name="otp"
+              value={form.otp}
+              onChange={setForm}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>First Name</Form.Label>
+            <Form.Control name="firstName" type="text" />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control name="email" type="email" />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Set Password</Form.Label>
+            <Form.Control name="password" type="password" />
           </Form.Group>
 
           <Button
+            onClick={handleSubmit}
             variant="primary"
             type="submit"
             className="w-100"
-            disabled={btnDisable}
           >
             Submit
           </Button>
@@ -93,9 +116,9 @@ function ForgotPassword() {
       </motion.div>
     </>
   );
-}
+};
 
-export default ForgotPassword;
+export default SignUp;
 
 const style = {
   backButton: {

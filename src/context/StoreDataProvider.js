@@ -1,22 +1,24 @@
-import { createContext, useContext, useReducer, useEffect } from "react"
-import API from "../utils/API"
+import { createContext, useContext, useReducer, useEffect } from "react";
+import API from "../utils/API";
 
-export const StoreContext = createContext({})
-export const useStore = () => useContext(StoreContext)
+export const StoreContext = createContext({});
+export const useStore = () => useContext(StoreContext);
 
 const storeActions = {
   MAKE_REQUEST: "MAKE_REQUEST",
   SET_COMPANY: "SET_COMPANY",
   SET_STORE: "SET_STORE",
   ERROR: "ERROR",
-}
+  SAVE_OTP: "SAVE_OTP",
+};
 
 const initialState = {
   isLoading: false,
   companyData: [],
   storeData: [],
   error: "",
-}
+  otpResult: null,
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -27,17 +29,18 @@ const reducer = (state, action) => {
     case storeActions.SET_STORE:
       return { ...state, storeData: action.payload, isLoading: false }
     default:
-      return state
+      return state;
   }
-}
+};
 
 export const StoreDataProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const createStore = async ({ id, body }) => {
+  const createStore = async (data) => {
     try {
-      dispatch({ type: storeActions.MAKE_REQUEST })
-      const response = await API.createStore({ id, body })
+      dispatch({ type: storeActions.MAKE_REQUEST });
+      const response = await API.createStore(data);
+      console.log(response);
     } catch (error) {
       dispatch({
         type: storeActions.ERROR,
@@ -45,12 +48,17 @@ export const StoreDataProvider = ({ children }) => {
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
-      })
+      });
     }
-  }
+  };
 
   const getCompanyByUser = async (user_id) => {
     try {
+<<<<<<< HEAD
+      dispatch({ type: storeActions.MAKE_REQUEST });
+      const response = await API.getStore(id);
+      console.log(response);
+=======
       dispatch({ type: storeActions.MAKE_REQUEST })
       const response = await API.getCompanyByUser(user_id)
       dispatch({ type: storeActions.SET_COMPANY, payload: response.data })
@@ -87,6 +95,7 @@ export const StoreDataProvider = ({ children }) => {
       dispatch({ type: storeActions.MAKE_REQUEST })
       const response = await API.getStoreByUser(user_id)
       console.log(response)
+>>>>>>> 72a330064695f742d270b02d8bb179dccba40179
     } catch (error) {
       dispatch({
         type: storeActions.ERROR,
@@ -94,21 +103,30 @@ export const StoreDataProvider = ({ children }) => {
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
-      })
+      });
     }
-  }
+  };
+
+  const getOtpData = async (data) => {
+    dispatch({ type: storeActions.SAVE_OTP, payload: data });
+  };
 
   return (
     <StoreContext.Provider
       value={{
         ...state,
         createStore,
+<<<<<<< HEAD
+        getStore,
+        getOtpData,
+=======
         getCompanyByUser,
         getStoreByCompany,
         getStoreByUser,
+>>>>>>> 72a330064695f742d270b02d8bb179dccba40179
       }}
     >
       {children}
     </StoreContext.Provider>
-  )
-}
+  );
+};

@@ -1,30 +1,44 @@
-import React from "react"
-import { useForm, useStep } from "react-hooks-helper"
+import React from "react";
+import { useForm, useStep } from "react-hooks-helper";
 import {
   StoreInfoForm,
   ChooseCategoryForm,
   PersonalInfoForm,
   AddressForm,
-} from "../domain"
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+  MobileNo,
+  SignUp,
+} from "../domain";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const defaultData = {
+  mobileNo: "",
+
+  otp: "",
+  firstName: "",
+  password: "",
+  email: "",
+
   storeName: "",
   businessName: "",
   websiteUrl: "",
   logo: "",
 
-  mainCategory: "",
+  mainCategory: [],
 
   countryBA: "",
   streetBA: "",
   cityBA: "",
   provinceBA: "",
   postalCodeBA: "",
-
+  AppartmentName: "",
   isPhysicalStore: "",
   isPhysicalSameAsRegisteredAddress: "",
+  secStreetBA: "",
+  secCityBA: "",
+  secProvinceBA: "",
+  secPostalCodeBA: "",
+  secAppartmentName: "",
 
   countryPA: "",
   streetPA: "",
@@ -39,14 +53,16 @@ const defaultData = {
   operatingHoursTo: "",
   weeklyOff: "",
   agreement: false,
-}
+};
 
 const steps = [
+  // { id: "mobileNo" },
+  // { id: "signUp" },
   { id: "storeInfo" },
   { id: "chooseCategory" },
   { id: "address" },
   { id: "personalInfo" },
-]
+];
 
 const BackToLogin = styled(Link)`
   position: absolute;
@@ -60,16 +76,17 @@ const BackToLogin = styled(Link)`
   :hover {
     text-decoration: none;
   }
-`
+`;
 
 function Register() {
-  const [form, setForm] = useForm(defaultData)
+  const [form, setForm] = useForm(defaultData);
+
   const { step, navigation } = useStep({
     steps,
     initialStep: 0,
-  })
+  });
 
-  const props = { form, setForm, navigation }
+  const props = { form, setForm, navigation };
 
   return (
     <div>
@@ -78,20 +95,27 @@ function Register() {
         <RegisterForms id={step.id} data={props} />
       </div>
     </div>
-  )
+  );
 }
 
 const RegisterForms = ({ id, data }) => {
+  const [otpResult, setOtpResult] = React.useState({});
   switch (id) {
+    // case "mobileNo":
+    //   return (
+    //     <MobileNo {...data} setOtpResult={setOtpResult} otpResult={otpResult} />
+    //   );
+    // case "signUp":
+    //   return <SignUp {...data} otpResult={otpResult} />;
     case "storeInfo":
-      return <StoreInfoForm {...data} />
+      return <StoreInfoForm {...data} />;
     case "chooseCategory":
-      return <ChooseCategoryForm {...data} />
+      return <ChooseCategoryForm {...data} />;
     case "address":
-      return <AddressForm {...data} />
+      return <AddressForm {...data} />;
     case "personalInfo":
-      return <PersonalInfoForm {...data} />
+      return <PersonalInfoForm {...data} />;
   }
-}
+};
 
-export default Register
+export default Register;

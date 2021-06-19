@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Navigation } from "@material-ui/icons";
+import firebase from "firebase/app";
 
 const FormContainer = styled.form`
   width: 400px;
@@ -28,35 +30,40 @@ const RegisterLink = styled(Link)`
   }
 `;
 
-function ForgotPassword() {
-  const [email, setEmail] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
-  const [btnDisable, setBtnDisable] = useState("");
-  const handleChange = (e) => {
-    setErrMsg("");
-    setSuccessMsg("");
-    setEmail(e.target.value);
-  };
-  const { resetPassword } = useAuth();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setBtnDisable(true);
-      await resetPassword(email);
-      setSuccessMsg("Check your inbox for further instruction");
-      setEmail("");
-    } catch (err) {
-      setErrMsg(err.code.split("/")[1]);
+const MobileNo = ({ form, setForm, navigation, setOtpResult }) => {
+  const [isOtpClicked, setOtpClicked] = React.useState(false);
+  const [reCaptcha, setRecaptcha] = React.useState();
+  // firebase.auth().settings.appVerificationDisabledForTesting = true;
+
+  const onGetOtp = () => {
+    if (form.mobileNo.length == 10) {
+      setOtpClicked(true);
+      let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
+
+      let number = "+91" + form.mobileNo;
+      firebase
+        .auth()
+        .signInWithPhoneNumber(number, reCaptcha)
+        .then((res) => {
+          setOtpResult(res);
+          navigation.next();
+        });
+    } else {
+      alert("Mobile number is mandatory");
     }
-    setBtnDisable(false);
+  };
+
+  const { resetPassword } = useAuth();
+
+  const handleSubmit = async (e) => {
+    navigation.next();
   };
   const history = useHistory();
   return (
     <>
       <RegisterLink to="register">New User ? Register here .</RegisterLink>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <FormContainer className="mx-auto" onSubmit={handleSubmit}>
+        <FormContainer className="mx-auto">
           <i
             style={style.backButton}
             className="fa fa-arrow-circle-left"
@@ -65,37 +72,26 @@ function ForgotPassword() {
             onClick={() => history.push(`/Login`)}
           ></i>
           <Form.Group controlId="formBasicEmail" className="mb-4">
-            <Form.Label className="text-center">
-              Please enter your registered email address and we will help you to
-              reset your password.
-            </Form.Label>
-            {errMsg && <Alert variant="danger">{errMsg}</Alert>}
-            {successMsg && <Alert variant="success">{successMsg}</Alert>}
-            <InputGroup className="mt-3">
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                onChange={handleChange}
-                required
-              />
-            </InputGroup>
+            <Form.Label>Mobile Number</Form.Label>
+            <Form.Control
+              name="mobileNo"
+              value={form.mobileNo}
+              type="number"
+              maxLength={10}
+              onChange={setForm}
+            />
           </Form.Group>
-
-          <Button
-            variant="primary"
-            type="submit"
-            className="w-100"
-            disabled={btnDisable}
-          >
-            Submit
+          <div id="recaptcha"></div>
+          <Button variant="primary" type="button" onClick={onGetOtp}>
+            Get OTP
           </Button>
         </FormContainer>
       </motion.div>
     </>
   );
-}
+};
 
-export default ForgotPassword;
+export default MobileNo;
 
 const style = {
   backButton: {
