@@ -33,7 +33,7 @@ const options = {
   print: false,
 }
 
-function Stores({ data }) {
+function Stores({ data, selectedCompany }) {
   const rowData = data.map((item) => ({
     storeName: item.storeName,
     managerName: item.managerName,
@@ -42,7 +42,7 @@ function Stores({ data }) {
 
   return (
     <MUIDataTable
-      title="Stores"
+      title={`${selectedCompany}'s Stores`}
       data={rowData}
       columns={columns}
       options={options}
