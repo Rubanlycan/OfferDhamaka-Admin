@@ -56,8 +56,8 @@ const defaultData = {
 };
 
 const steps = [
-  // { id: "mobileNo" },
-  // { id: "signUp" },
+  { id: "mobileNo" },
+  { id: "signUp" },
   { id: "storeInfo" },
   { id: "chooseCategory" },
   { id: "address" },
@@ -101,12 +101,12 @@ function Register() {
 const RegisterForms = ({ id, data }) => {
   const [otpResult, setOtpResult] = React.useState({});
   switch (id) {
-    // case "mobileNo":
-    //   return (
-    //     <MobileNo {...data} setOtpResult={setOtpResult} otpResult={otpResult} />
-    //   );
-    // case "signUp":
-    //   return <SignUp {...data} otpResult={otpResult} />;
+    case "mobileNo":
+      return (
+        <MobileNo {...data} setOtpResult={setOtpResult} otpResult={otpResult} />
+      );
+    case "signUp":
+      return <SignUp {...data} otpResult={otpResult} />;
     case "storeInfo":
       return <StoreInfoForm {...data} />;
     case "chooseCategory":

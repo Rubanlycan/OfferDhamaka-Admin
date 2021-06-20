@@ -107,7 +107,7 @@ const SignUp = ({ navigation, form, setForm, otpResult }) => {
           <Button
             onClick={handleSubmit}
             variant="primary"
-            type="submit"
+            type="button"
             className="w-100"
           >
             Submit

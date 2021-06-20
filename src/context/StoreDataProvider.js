@@ -54,11 +54,6 @@ export const StoreDataProvider = ({ children }) => {
 
   const getCompanyByUser = async (user_id) => {
     try {
-<<<<<<< HEAD
-      dispatch({ type: storeActions.MAKE_REQUEST });
-      const response = await API.getStore(id);
-      console.log(response);
-=======
       dispatch({ type: storeActions.MAKE_REQUEST })
       const response = await API.getCompanyByUser(user_id)
       dispatch({ type: storeActions.SET_COMPANY, payload: response.data })
@@ -95,7 +90,6 @@ export const StoreDataProvider = ({ children }) => {
       dispatch({ type: storeActions.MAKE_REQUEST })
       const response = await API.getStoreByUser(user_id)
       console.log(response)
->>>>>>> 72a330064695f742d270b02d8bb179dccba40179
     } catch (error) {
       dispatch({
         type: storeActions.ERROR,
@@ -116,14 +110,9 @@ export const StoreDataProvider = ({ children }) => {
       value={{
         ...state,
         createStore,
-<<<<<<< HEAD
-        getStore,
-        getOtpData,
-=======
         getCompanyByUser,
         getStoreByCompany,
         getStoreByUser,
->>>>>>> 72a330064695f742d270b02d8bb179dccba40179
       }}
     >
       {children}
