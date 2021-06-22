@@ -23,11 +23,11 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case storeActions.MAKE_REQUEST:
-      return { ...state, isLoading: true }
+      return { ...state, isLoading: true };
     case storeActions.SET_COMPANY:
-      return { ...state, companyData: action.payload, isLoading: false }
+      return { ...state, companyData: action.payload, isLoading: false };
     case storeActions.SET_STORE:
-      return { ...state, storeData: action.payload, isLoading: false }
+      return { ...state, storeData: action.payload, isLoading: false };
     default:
       return state;
   }
@@ -54,9 +54,9 @@ export const StoreDataProvider = ({ children }) => {
 
   const getCompanyByUser = async (user_id) => {
     try {
-      dispatch({ type: storeActions.MAKE_REQUEST })
-      const response = await API.getCompanyByUser(user_id)
-      dispatch({ type: storeActions.SET_COMPANY, payload: response.data })
+      dispatch({ type: storeActions.MAKE_REQUEST });
+      const response = await API.getCompanyByUser(user_id);
+      dispatch({ type: storeActions.SET_COMPANY, payload: response.data });
     } catch (error) {
       dispatch({
         type: storeActions.ERROR,
@@ -64,16 +64,16 @@ export const StoreDataProvider = ({ children }) => {
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
-      })
+      });
     }
-  }
+  };
 
   const getStoreByCompany = async (company_id) => {
     try {
-      dispatch({ type: storeActions.MAKE_REQUEST })
-      const response = await API.getStoreByCompany(company_id)
-      console.log(response)
-      dispatch({ type: storeActions.SET_STORE, payload: response.data })
+      dispatch({ type: storeActions.MAKE_REQUEST });
+      const response = await API.getStoreByCompany(company_id);
+      console.log(response);
+      dispatch({ type: storeActions.SET_STORE, payload: response.data });
     } catch (error) {
       dispatch({
         type: storeActions.ERROR,
@@ -81,15 +81,15 @@ export const StoreDataProvider = ({ children }) => {
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
-      })
+      });
     }
-  }
+  };
 
   const getStoreByUser = async (user_id) => {
     try {
-      dispatch({ type: storeActions.MAKE_REQUEST })
-      const response = await API.getStoreByUser(user_id)
-      console.log(response)
+      dispatch({ type: storeActions.MAKE_REQUEST });
+      const response = await API.getStoreByUser(user_id);
+      console.log(response);
     } catch (error) {
       dispatch({
         type: storeActions.ERROR,

@@ -37,22 +37,25 @@ const SignUp = ({ navigation, form, setForm, otpResult }) => {
 
   const { resetPassword } = useAuth();
 
+  const { password, email, firstName } = form;
+
   const handleSubmit = async (e) => {
     try {
-      if (form.otp) {
-        otpResult
-          .confirm(form.otp)
-          .then((result) => {
-            console.log(result.user, "user");
-            alert("number verified Successfully");
-          })
-          .catch((error) => {
-            console.log(error);
-            alert(error);
-          });
-      } else {
-        alert("Please enter Otp");
-      }
+      navigation.next();
+      // if (form.otp) {
+      //   otpResult
+      //     .confirm(form.otp)
+      //     .then((result) => {
+      //       console.log(result.user, "user");
+      //       alert("number verified Successfully");
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //       alert(error);
+      //     });
+      // } else {
+      //   alert("Please enter Otp");
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -93,15 +96,30 @@ const SignUp = ({ navigation, form, setForm, otpResult }) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>First Name</Form.Label>
-            <Form.Control name="firstName" type="text" />
+            <Form.Control
+              name="firstName"
+              type="text"
+              value={firstName}
+              onChange={setForm}
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Email Address</Form.Label>
-            <Form.Control name="email" type="email" />
+            <Form.Control
+              name="email"
+              type="email"
+              value={email}
+              onChange={setForm}
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Set Password</Form.Label>
-            <Form.Control name="password" type="password" />
+            <Form.Control
+              name="password"
+              type="password"
+              value={password}
+              onChange={setForm}
+            />
           </Form.Group>
 
           <Button

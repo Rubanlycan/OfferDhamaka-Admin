@@ -40,14 +40,15 @@ const MobileNo = ({ form, setForm, navigation, setOtpResult }) => {
       setOtpClicked(true);
       let reCaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
 
-      let number = "+91" + form.mobileNo;
-      firebase
-        .auth()
-        .signInWithPhoneNumber(number, reCaptcha)
-        .then((res) => {
-          setOtpResult(res);
-          navigation.next();
-        });
+      let number = "+1" + form.mobileNo;
+      // firebase
+      //   .auth()
+      //   .signInWithPhoneNumber(number, reCaptcha)
+      //   .then((res) => {
+      //     setOtpResult(res);
+      //     navigation.next();
+      //   });
+      navigation.next();
     } else {
       alert("Mobile number is mandatory");
     }
@@ -74,6 +75,7 @@ const MobileNo = ({ form, setForm, navigation, setOtpResult }) => {
           <Form.Group controlId="formBasicEmail" className="mb-4">
             <Form.Label>Mobile Number</Form.Label>
             <Form.Control
+              required
               name="mobileNo"
               value={form.mobileNo}
               type="number"

@@ -136,7 +136,7 @@ function AddressForm({ form, setForm, navigation }) {
           label="Yes"
           name="isPhysicalStore"
           type="radio"
-          value="Yes"
+          value="Y"
           onChange={setForm}
           id="inline-radio-1"
         />
@@ -145,13 +145,13 @@ function AddressForm({ form, setForm, navigation }) {
           label="No"
           name="isPhysicalStore"
           type="radio"
-          value="No"
+          value="N"
           onChange={setForm}
           id="inline-radio-2"
         />
       </Form.Group>
 
-      {isPhysicalStore == "No" && (
+      {isPhysicalStore == "N" && (
         <div>
           <Form.Label>
             Physical address same as registered business address !
@@ -160,7 +160,7 @@ function AddressForm({ form, setForm, navigation }) {
             <Form.Check
               inline
               label="Yes"
-              value="Yes"
+              value="Y"
               name="isPhysicalSameAsRegisteredAddress"
               type="radio"
               onChange={setForm}
@@ -169,7 +169,7 @@ function AddressForm({ form, setForm, navigation }) {
             <Form.Check
               inline
               label="No"
-              value="No"
+              value="N"
               name="isPhysicalSameAsRegisteredAddress"
               type="radio"
               onChange={setForm}
@@ -179,7 +179,7 @@ function AddressForm({ form, setForm, navigation }) {
         </div>
       )}
 
-      {isPhysicalStore === "No" && isPhysicalSameAsRegisteredAddress === "No" && (
+      {isPhysicalStore === "N" && isPhysicalSameAsRegisteredAddress === "N" && (
         <div>
           <Form.Group>
             <Form.Label>Appartment No</Form.Label>

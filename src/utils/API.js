@@ -42,12 +42,13 @@ const encodedUserId = (userId) => {
 const API = {
   // To add new store
   createStore({ id, body }) {
-    return Auth_api.post(`/stores/addStore/${id}`, body);
+    console.log("add store: ", body);
+    return Auth_api.post(`/stores/addStore/${encodedUserId(id)}`, body);
   },
 
   // Get company by user
   getCompanyByUser(user_id) {
-    return Auth_api.get(`/companies/getCompany/${user_id}`);
+    return Auth_api.get(`/companies/getCompany/${encodedUserId(user_id)}`);
   },
 
   // Get store by company

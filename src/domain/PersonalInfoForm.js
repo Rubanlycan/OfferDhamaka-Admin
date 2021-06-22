@@ -3,6 +3,9 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 import firebase from "firebase/app";
 import { useStore } from "../context";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../utils/AuthContext";
+import { EmailOutlined } from "@material-ui/icons";
 
 const FormContainer = styled.form`
   width: 500px;
@@ -29,8 +32,43 @@ function PersonalInfoForm({ form, setForm, navigation }) {
   const [mobileNum, setMobileNum] = React.useState("");
   const [isOtpClicked, setOtpClicked] = React.useState(false);
   const { createStore } = useStore();
+  const { signUp, userInfo } = useAuth();
+
+  const history = useHistory();
 
   const {
+    mobileNo,
+
+    firstName,
+    password,
+
+    storeName,
+    businessName,
+    websiteUrl,
+    logo,
+
+    mainCategory,
+
+    countryBA,
+    streetBA,
+    cityBA,
+    provinceBA,
+    postalCodeBA,
+    AppartmentName,
+    isPhysicalStore,
+    isPhysicalSameAsRegisteredAddress,
+    secStreetBA,
+    secCityBA,
+    secProvinceBA,
+    secPostalCodeBA,
+    secAppartmentName,
+
+    countryPA,
+    streetPA,
+    cityPA,
+    provincePA,
+    postalCodePA,
+
     ownerName,
     email,
     contactNumber,
@@ -40,15 +78,15 @@ function PersonalInfoForm({ form, setForm, navigation }) {
     agreement,
   } = form;
 
-  const Register = () => {
-    let data = {
-      id: "Z3Vlc3Q=",
+  const Register = async () => {
+    let body = {
+      id: "98a631a9b613eb7d19e8319b2aa32c91",
       code: "Primary",
       gstin: "string",
-      storeName: "testDV121",
-      companyBusinessName: "testCompany",
-      websiteUrl: "test.com",
-      companyLogo: "test",
+      storeName: storeName,
+      companyBusinessName: businessName,
+      websiteUrl: websiteUrl,
+      companyLogo: logo,
       categories: [
         {
           id: "1",
@@ -71,13 +109,13 @@ function PersonalInfoForm({ form, setForm, navigation }) {
       storePincode: "111021",
       managerName: "test",
       managerMobile: "13123123",
-      managerEmail: "test@test.com",
+      managerEmail: email,
       fromHrs: 0,
       toHrs: 0,
       weeklyOff: "Sunday",
       featuredFrom: "2021-06-15T05:02:19.236Z",
       featuredTill: "2021-06-15T05:02:19.236Z",
-      companyId: "string",
+      companyId: "",
       active: "Y",
       isPremium: "Y",
       areas: ["string"],
@@ -88,7 +126,16 @@ function PersonalInfoForm({ form, setForm, navigation }) {
       logo: "string",
       area: "string",
     };
-    createStore(data);
+
+    try {
+      const val = await signUp(email, password);
+
+      let id = val.user.uid;
+      await createStore({ id, body });
+      //    history.replace("/home");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // const onRegister = () => {
@@ -149,20 +196,10 @@ function PersonalInfoForm({ form, setForm, navigation }) {
         <Form.Control
           name="contactNumber"
           type="text"
+          vakue={contactNumber}
           onChange={(e) => setMobileNum(e.target.value)}
         />
       </Form.Group>
-      {isOtpClicked ? (
-        <Form.Group>
-          <Form.Label>Please enter your OTP</Form.Label>
-          <Form.Control
-            name="otp"
-            maxLength={6}
-            type="text"
-            onChange={(e) => setotp(e.target.value)}
-          />
-        </Form.Group>
-      ) : null}
 
       <Form.Label>Store operating hours</Form.Label>
       <Form.Row>

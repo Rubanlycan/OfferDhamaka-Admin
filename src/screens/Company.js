@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react"
-import { Card } from "react-bootstrap"
-import Button from "@material-ui/core/Button"
-import { useStore } from "../context"
-import { useAuth } from "../utils/AuthContext"
-import { Stores } from "../domain"
-import MUIDataTable from "mui-datatables"
+import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+import Button from "@material-ui/core/Button";
+import { useStore } from "../context";
+import { useAuth } from "../utils/AuthContext";
+import { Stores } from "../domain";
+import MUIDataTable from "mui-datatables";
 
 const columns = [
   {
@@ -55,20 +55,20 @@ const columns = [
       sort: true,
     },
   },
-]
+];
 
 function Company() {
   const { companyData, storeData, getCompanyByUser, getStoreByCompany } =
-    useStore()
-  const { userInfo } = useAuth()
+    useStore();
+  const { userInfo } = useAuth();
+  console.log(userInfo);
+  const [selectedCompany, setSelectedCompany] = useState("");
 
-  const [selectedCompany, setSelectedCompany] = useState("")
-
-  const [rowIndex, setRowIndex] = useState(-1)
+  const [rowIndex, setRowIndex] = useState(-1);
 
   useEffect(() => {
-    getCompanyByUser("Z3Vlc3Q=")
-  }, [])
+    getCompanyByUser(userInfo.uid);
+  }, []);
 
   const options = {
     rowsPerPage: 10,
@@ -76,11 +76,11 @@ function Company() {
     selectableRows: "single",
     selectableRowsOnClick: true,
     onRowSelectionChange: (curRowSelected) => {
-      const selectedRow = companyData[curRowSelected[0].index]
-      getStoreByCompany(selectedRow.id)
-      setSelectedCompany(selectedRow.name)
+      const selectedRow = companyData[curRowSelected[0].index];
+      getStoreByCompany(selectedRow.id);
+      setSelectedCompany(selectedRow.name);
     },
-  }
+  };
 
   const rowData = companyData.map((item) => ({
     id: item.id,
@@ -89,7 +89,7 @@ function Company() {
     managerName: item.managerName,
     managerMobile: item.managerMobile,
     pincode: item.pincode,
-  }))
+  }));
 
   return (
     <>
@@ -123,7 +123,7 @@ function Company() {
         <Stores data={storeData} selectedCompany={selectedCompany} />
       )}
     </>
-  )
+  );
 }
 
-export default Company
+export default Company;
